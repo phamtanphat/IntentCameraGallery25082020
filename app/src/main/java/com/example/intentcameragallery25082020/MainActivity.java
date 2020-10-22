@@ -1,6 +1,7 @@
 package com.example.intentcameragallery25082020;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -8,6 +9,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -51,5 +53,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_CAMERA && resultCode == RESULT_OK && data != null){
+           Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+           mBinding.imageview.setImageBitmap(bitmap);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
